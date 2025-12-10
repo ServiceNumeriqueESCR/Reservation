@@ -13,8 +13,6 @@ services:
     restart: always
     depends_on:
       - db
-    ports:
-      - "80:80"
     volumes:
       - app_conf:/config
     env_file:
