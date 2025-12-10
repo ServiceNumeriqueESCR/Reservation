@@ -1,34 +1,53 @@
-name: librebooking
+version: "3.9"
 
 services:
   db:
     image: linuxserver/mariadb:10.6.13
     restart: always
     volumes:
-      - db_conf:/config
-    env_file:
-      - db.env
+      - db_data:/config
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Paris
+      - MYSQL_ROOT_PASSWORD=SuperRootLB123
+      - MYSQL_DATABASE=librebooking
+      - MYSQL_USER=lb_user
+      - MYSQL_PASSWORD=UserLB123
+    networks:
+      - default              # 👈 réseau interne de la stack
+
   app:
     image: librebooking/librebooking:4.0.0
     restart: always
     depends_on:
       - db
     volumes:
-      - app_conf:/config
-    env_file:
-      - lb.env
+      - app_config:/config
+    environment:
+      - LB_DB_NAME=librebooking
+      - LB_DB_USER=lb_user
+      - LB_DB_USER_PWD=UserLB123
+      - LB_DB_HOST=db        # 👈 c’est ce nom-là à mettre dans config.php
+      - LB_INSTALL_PWD=InstallLB123
+      - TZ=Europe/Paris
+    networks:
+      - default              # 👈 pour parler à db
+      - dokploy-network      # 👈 pour être vu par dokploy-traefik
+    # si tu passes *uniquement* par Traefik, tu n'as pas besoin de ports:
+    # ports:
+    #   - "8080:80"
+
   cron:
     image: librebooking/librebooking:4.0.0
-    restart: always
-    user: root
-    entrypoint: /usr/local/bin/cron.sh
-    depends_on:
-      - app
-    volumes:
-      - app_conf:/config
-    env_file:
-      - lb.env
+    # (si tu as un conteneur cron dans ta stack)
+    networks:
+      - default
 
 volumes:
-  db_conf:
-  app_conf:
+  db_data:
+  app_config:
+
+networks:
+  dokploy-network:
+    external: true   # réseau de dokploy-traefik
