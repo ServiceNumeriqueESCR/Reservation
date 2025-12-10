@@ -8,6 +8,8 @@ services:
       - db_conf:/config
     env_file:
       - db.env
+     networks:
+      - default              # 👈 réseau interne de la stack
   app:
     image: librebooking/librebooking:4.0.0
     restart: always
@@ -17,6 +19,9 @@ services:
       - app_conf:/config
     env_file:
       - lb.env
+    networks:
+      - default              # 👈 pour parler à db
+      - dokploy-network      # 👈 pour être vu par dokploy-traefik
   cron:
     image: librebooking/librebooking:4.0.0
     restart: always
@@ -32,3 +37,6 @@ services:
 volumes:
   db_conf:
   app_conf:
+networks:
+  dokploy-network:
+    external: true   # réseau de dokploy-traefik
