@@ -18,7 +18,7 @@ services:
     volumes:
       - app_conf:/config  
       - uploads_images:/var/www/html/Web/uploads/images
-      - uploads_reservation:/var/www/html/Web/uploads/reservations
+      - uploads_reservation:/var/www/html/Web/uploads/reservation
     env_file:
       - lb.env
     networks:
