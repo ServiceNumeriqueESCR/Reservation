@@ -39,7 +39,6 @@ services:
 volumes:
   db_conf:
   app_conf:
-  ./uploads/images:
 networks:
   dokploy-network:
     external: true
