@@ -16,9 +16,7 @@ services:
     depends_on:
       - db
     volumes:
-      - app_conf:/config
-      - ./uploads/images:/var/www/html/Web/uploads/images
-      - ./uploads/reservation:/var/www/html/Web/uploads/reservation      
+      - app_conf:/config   
     env_file:
       - lb.env
     networks:
