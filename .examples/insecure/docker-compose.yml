@@ -17,8 +17,8 @@ services:
       - db
     volumes:
       - app_conf:/config  
-      - ./uploads/images:/var/www/html/Web/uploads/images
-      - ./uploads/reservation:/var/www/html/Web/uploads/reservation
+      - uploads_images:/var/www/html/Web/uploads/images
+      - uploads_reservation:/var/www/html/Web/uploads/reservation
     env_file:
       - lb.env
     networks:
@@ -39,6 +39,8 @@ services:
 volumes:
   db_conf:
   app_conf:
+  uploads_reservation:
+  uploads_images:
 networks:
   dokploy-network:
     external: true
