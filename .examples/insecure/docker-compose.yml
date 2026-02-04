@@ -10,6 +10,7 @@ services:
       - db.env
     networks:
       - default
+      - dokploy-network
   app:
     image: librebooking/librebooking:4.0.0
     restart: always
@@ -35,6 +36,9 @@ services:
       - app_conf:/config
     env_file:
       - lb.env
+    networks:
+      - default
+      - dokploy-network
 
 volumes:
   db_conf:
