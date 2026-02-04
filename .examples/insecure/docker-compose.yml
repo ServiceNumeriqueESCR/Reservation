@@ -22,8 +22,6 @@ services:
       - ./uploads/reservation:/var/www/html/Web/uploads/reservation
     env_file:
       - lb.env
-    ports:
-      - "8888:80"
     networks:
       - default
       - dokploy-network
