@@ -23,7 +23,7 @@ services:
     env_file:
       - lb.env
     ports:
-      - "80:80"
+      - "8888:80"
     networks:
       - default
       - dokploy-network
