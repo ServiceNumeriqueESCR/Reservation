@@ -9,7 +9,7 @@ services:
     env_file:
       - db.env
     ports:
-      - 8089:80
+      - 8989:80
     networks:
       - default
       - dokploy-network
