@@ -8,7 +8,7 @@ services:
       - db_conf:/config
     env_file:
       - db.env
-    port:
+    ports:
       - 8089:80
     networks:
       - default
